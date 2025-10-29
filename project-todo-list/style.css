@@ -1,0 +1,189 @@
+/* --- إعدادات عامة وأساسيات --- */
+:root {
+  --primary-color: #28a745; /* أخضر للزرار الرئيسي */
+  --secondary-color: #6c757d; /* رمادي للعناصر الثانوية */
+  --accent-color: #ffc107; /* أصفر خفيف للـ Accent */
+  --background-light: #f8f9fa; /* بيج فاتح كخلفية */
+  --background-dark: #e9ecef; /* رمادي فاتح للخلفيات الأغمق */
+  --text-color-dark: #343a40; /* أسود غامق للنصوص */
+  --text-color-light: #ffffff; /* أبيض للنصوص اللي على خلفية غامقة */
+  --completed-task-color: #dc3545; /* أحمر خفيف للمهام المكتملة */
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #0f3443,
+    #34e89e
+  ); /* خلفية متدرجة جميلة */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl; /* اتجاه من اليمين لليسار */
+  text-align: right; /* محاذاة لليمين */
+}
+
+.todo-app {
+  background: #fff;
+  width: 100%;
+  max-width: 540px;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.todo-app h2 {
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 32px;
+}
+
+.todo-app h2 i {
+  margin-right: 15px; /* مسافة بين النص والأيقونة */
+  color: var(--primary-color);
+}
+
+/* --- مربع الإدخال والزرار --- */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--secondary-color);
+  border-radius: 30px;
+  padding-right: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.row input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 12px 15px;
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.row button {
+  border: none;
+  outline: none;
+  padding: 12px 35px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: background 0.3s ease;
+}
+
+.row button:hover {
+  background: var(--hover-color);
+}
+
+/* --- قائمة المهام --- */
+#taskList {
+  padding: 0;
+}
+
+#taskList li {
+  background: var(--secondary-color);
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  color: var(--text-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+#taskList li:hover {
+  background: #e9ecef;
+}
+
+/* زرار الحذف */
+#taskList li .delete-button {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px; /* مساحة ضغط أفضل */
+}
+
+#taskList li .delete-button:hover {
+  color: var(--delete-button-color);
+}
+
+/* --- المهام المكتملة --- */
+#taskList li.completed {
+  color: #888;
+  text-decoration: line-through; /* خط في المنتصف */
+  background: #e0f2f7; /* خلفية فاتحة مختلفة */
+}
+
+#taskList li.completed .delete-button {
+  color: #bbb;
+}
+
+#taskList li.completed .delete-button:hover {
+  color: var(--delete-button-color);
+}
+
+/* --- التجاوب مع الموبايل --- */
+@media (max-width: 600px) {
+  .todo-app {
+    margin: 20px;
+    padding: 25px 30px;
+  }
+  .todo-app h2 {
+    font-size: 28px;
+  }
+  .row input,
+  .row button {
+    font-size: 16px;
+  }
+  .row button {
+    padding: 12px 25px;
+  }
+  #taskList li {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+  #taskList li .delete-button {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .row {
+    flex-direction: column;
+    padding-right: 0;
+    border-radius: 10px;
+  }
+  .row input {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    padding: 15px;
+  }
+  .row button {
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    padding: 15px;
+  }
+}

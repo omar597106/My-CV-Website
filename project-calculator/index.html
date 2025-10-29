@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>آلة حاسبة بسيطة</title>
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="calculator-container">
+      <div class="calculator-display">
+        <input type="text" id="display" value="0" readonly />
+      </div>
+      <div class="calculator-buttons">
+        <button class="btn btn-operator" data-action="clear">C</button>
+        <button class="btn btn-operator" data-action="delete">DEL</button>
+        <button class="btn btn-operator" data-action="divide">/</button>
+        <button class="btn btn-operator" data-action="multiply">*</button>
+
+        <button class="btn btn-number">7</button>
+        <button class="btn btn-number">8</button>
+        <button class="btn btn-number">9</button>
+        <button class="btn btn-operator" data-action="subtract">-</button>
+
+        <button class="btn btn-number">4</button>
+        <button class="btn btn-number">5</button>
+        <button class="btn btn-number">6</button>
+        <button class="btn btn-operator" data-action="add">+</button>
+
+        <button class="btn btn-number">1</button>
+        <button class="btn btn-number">2</button>
+        <button class="btn btn-number">3</button>
+        <button class="btn btn-equals" data-action="calculate">=</button>
+
+        <button class="btn btn-number span-two">0</button>
+        <button class="btn btn-number" data-action="decimal">.</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

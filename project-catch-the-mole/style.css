@@ -1,0 +1,187 @@
+/* --- إعدادات عامة وأساسيات --- */
+:root {
+  --primary-color: #4caf50; /* لون أخضر جميل */
+  --secondary-color: #ffc107; /* لون أصفر */
+  --text-color: #333;
+  --light-text-color: #eee;
+  --bg-dark: #2c3e50; /* خلفية أغمق */
+  --grid-bg: #8c6a5b; /* لون أرضية (تراب) */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #0f3443,
+    #34e89e
+  ); /* نفس الخلفية الجميلة */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl; /* اتجاه من اليمين لليسار */
+  text-align: center; /* محاذاة كل المحتوى للمنتصف */
+  color: var(--light-text-color);
+}
+
+.game-container {
+  background: var(--bg-dark);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 500px; /* عرض مناسب للعبة */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* مسافة بين العناصر */
+}
+
+h1 {
+  color: var(--secondary-color);
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+/* --- لوحة النتيجة والوقت --- */
+.score-board {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: #34495e;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.score-item p {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #bdc3c7;
+}
+
+.score-item span {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* --- زرار الإبدأ --- */
+#start-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#start-button:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+#start-button:active {
+  transform: translateY(0);
+}
+
+/* --- شبكة اللعبة (Grid) --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 أعمدة متساوية */
+  grid-gap: 15px; /* مسافة بين المربعات */
+  width: 100%;
+  background-color: var(--grid-bg);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.square {
+  width: 100%;
+  padding-bottom: 100%; /* عشان يفضل مربع (Aspect Ratio Trick) */
+  background-color: #6d4c41; /* لون التراب */
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden; /* مهم عشان الوحش ميتخطاش الحدود */
+  cursor: url("images/hammer.png"), auto; /* ممكن تحط أيقونة مطرقة هنا */
+  transition: background-color 0.2s ease;
+  /* ... كل التنسيقات القديمة زي background-color و border-radius ... */
+  position: relative;
+  overflow: hidden; /* !! ده أهم سطر، بيخفي الوحش لما يكون تحت */
+}
+
+.square:hover {
+  background-color: #8d6e63; /* يتغير لونه بسيط عند التحويم */
+}
+
+/* --- الوحش اللي هيظهر --- */
+.mole {
+  background-image: url("images/mole.png");
+  background-size: 80% 80%; /* خليناه 80% عشان ميملاش المربع كله */
+  background-repeat: no-repeat;
+  background-position: center bottom; /* خليه يتركز تحت في المربع */
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* ابدأ مخفي (تحت المربع) */
+  transform: translateY(100%);
+
+  /* استخدم transition بدل animation عشان الحركة تبقى أنعم */
+  transition: transform 0.2s ease-out;
+
+  pointer-events: none; /* عشان الضغطة تعدي للمربع */
+}
+/* حركة ظهور الوحش */
+@keyframes pop-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+/* الكلاس ده هيتضاف بالـ JS للمربع الأب (.square) */
+.square.up .mole {
+  transform: translateY(0); /* خليه يطلع لمكانه الطبيعي (يظهر) */
+}
+
+/* --- التجاوب مع الموبايل --- */
+@media (max-width: 550px) {
+  .game-container {
+    margin: 20px;
+    padding: 20px;
+    max-width: 95%;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  .score-item span {
+    font-size: 1.5em;
+  }
+  #start-button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+  .grid {
+    grid-gap: 10px;
+    padding: 10px;
+  }
+  .square {
+    border-radius: 8px;
+  }
+}

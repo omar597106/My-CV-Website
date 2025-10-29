@@ -1,0 +1,143 @@
+/* --- إعدادات عامة وأساسيات --- */
+:root {
+  --calculator-bg: #222; /* خلفية الآلة الحاسبة */
+  --display-bg: #333; /* خلفية شاشة العرض */
+  --display-text: #fff; /* لون نص شاشة العرض */
+  --button-bg: #555; /* خلفية الأزرار العادية */
+  --button-hover: #777; /* لون الأزرار عند التحويم */
+  --operator-bg: #ff9800; /* لون أزرار العمليات (برتقالي) */
+  --operator-hover: #e08e00; /* لون أزرار العمليات عند التحويم */
+  --equals-bg: #007bff; /* لون زرار يساوي (أزرق) */
+  --equals-hover: #0056b3; /* لون زرار يساوي عند التحويم */
+  --text-color: #fff; /* لون نص الأزرار */
+  --primary-color: #ff9800; /* برتقالي للعمليات */
+  --secondary-color: #424242; /* رمادي غامق للأزرار */
+  --accent-color: #e0e0e0; /* رمادي فاتح للـ Text Input */
+  --background-dark: #212121; /* أسود غامق جداً كخلفية */
+  --background-light: #616161; /* رمادي متوسط للخلفيات الثانوية */
+  --text-color-light: #ffffff; /* أبيض للنصوص */
+  --text-color-dark: #bdbdbd; /* رمادي فاتح للنصوص الأقل أهمية */
+  --clear-button-color: #f44336; /* أحمر لزرار الـ Clear */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #0f3443,
+    #34e89e
+  ); /* نفس الخلفية الجميلة */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl; /* اتجاه من اليمين لليسار */
+  text-align: right; /* محاذاة لليمين */
+}
+
+.calculator-container {
+  background: var(--calculator-bg);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 380px; /* عرض مناسب للآلة الحاسبة */
+  overflow: hidden; /* لمنع أي تجاوز */
+}
+
+/* --- شاشة العرض --- */
+.calculator-display {
+  margin-bottom: 20px;
+}
+
+#display {
+  width: 100%;
+  background: var(--display-bg);
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 3.2em; /* حجم خط كبير جدا */
+  text-align: left; /* محاذاة النص لليسار */
+  color: var(--display-text);
+  height: 90px;
+  outline: none;
+  direction: ltr; /* اتجاه الأرقام من الشمال لليمين */
+  overflow-x: auto; /* لو الرقم كبير يحصله سكرول */
+}
+
+/* --- الأزرار --- */
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 أعمدة متساوية */
+  gap: 15px; /* مسافة بين الأزرار */
+}
+
+.btn {
+  background: var(--button-bg);
+  color: var(--text-color);
+  border: none;
+  padding: 20px;
+  font-size: 1.8em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  display: flex; /* لتوسيط المحتوى */
+  justify-content: center;
+  align-items: center;
+}
+
+.btn:hover {
+  background: var(--button-hover);
+  transform: scale(1.02);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* الأزرار الخاصة */
+.btn-operator {
+  background: var(--operator-bg);
+}
+
+.btn-operator:hover {
+  background: var(--operator-hover);
+}
+
+.btn-equals {
+  background: var(--equals-bg);
+  grid-row: span 2; /* زرار يساوي ياخد عمودين */
+}
+
+.btn-equals:hover {
+  background: var(--equals-hover);
+}
+
+.span-two {
+  /* ده لزرار الصفر عشان ياخد مساحة زرارين */
+  grid-column: span 2;
+}
+
+/* --- التجاوب مع الموبايل --- */
+@media (max-width: 480px) {
+  .calculator-container {
+    margin: 20px;
+    padding: 15px;
+    max-width: 90%;
+  }
+  #display {
+    font-size: 2.5em;
+    height: 70px;
+    padding: 15px;
+  }
+  .btn {
+    padding: 15px;
+    font-size: 1.5em;
+  }
+}

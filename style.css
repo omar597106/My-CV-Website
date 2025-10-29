@@ -1,0 +1,507 @@
+#particles-js {
+  position: fixed; /* تثبيته في الخلفية */
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* لون الخلفية الأساسي بتاعت الجسيمات (غامق عشان تبان) */
+  background-image: url(""); /* لو عايز تحط صورة خلفية */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  z-index: -2; /* أخليه تحت أي حاجة تانية (أقل من -1 عشان لو فيه حاجة بـ -1) */
+}
+
+/* مهم: خلي الـ body والـ sections بتاعتك ليها background-color عشان ميكنش كله شفاف */
+body {
+  background-color: transparent; /* خلي الـ body شفاف عشان الـ particles تبان */
+}
+main {
+  /* لو عندك main tag */
+  background-color: transparent;
+}
+section.container {
+  /* background-color: var(
+    --background-color,
+    #ffffff 
+  ); /* أو أي لون أساسي للأقسام */
+  position: relative; /* عشان يبقى فوق الـ particles */
+  z-index: 1; /* عشان يظهر فوق الخلفية المتحركة */
+}
+/* --- إعدادات عامة --- */
+:root {
+  --primary-color: #007bff; /* لون أساسي (أزرق) */
+  --primary-hover: #0056b3; /* لون التحويم */
+  --dark-color: #333;
+  --light-color: #f4f4f4;
+  --text-color: #555;
+  --secondary-color: #6c757d; /* لون ثانوي للزرار */
+  --secondary-hover: #5a6268;
+  --header-start-color: #007bff; /* لون بداية الهيدر */
+  --header-end-color: #0056b3; /* لون نهاية الهيدر */
+  --scrolled-header-start-color: #343a40; /* لون بداية الهيدر عند السكرول */
+  --scrolled-header-end-color: #212529; /* لون نهاية الهيدر عند السكرول */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* !!! تم التعديل: استخدام خط Cairo */
+  font-family: "Cairo", sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.7; /* زيادة طفيفة لراحة العين */
+  background-color: #fff;
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-weight: 700; /* خط أعرض للعناوين */
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+section {
+  padding: 60px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* --- 1. الهيدر وشريط التنقل --- */
+header {
+  background: var(--dark-color);
+  color: #fff;
+  padding: 20px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* إضافة ظل للهيدر */
+  transition: all 0.5s ease; /* حركة ناعمة لكل الخصائص */
+  position: sticky; /* ده بيخلي الهيدر يثبت */
+  top: 0; /* بيثبته في أعلى الصفحة */
+  z-index: 1000; /* بيخليه فوق كل العناصر التانية عشان ميتغطاش */
+  background-color: var(
+    --primary-color,
+    #f4f4f4
+  ); /* خلفية الهيدر (ممكن تكون أي لون تختاره) */
+  padding: 1rem 0; /* المسافة الداخلية للهيدر */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* ظل خفيف عشان يبان منفصل */
+  transition: background-color 0.3s ease; /* حركة ناعمة لو غيرنا اللون بالـ JS */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-image: linear-gradient(
+    to right,
+    var(--header-start-color, #007bff),
+    var(--header-end-color, #0056b3)
+  ); /* تداخل ألوان */
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease; /* حركة ناعمة لكل الخصائص */
+  color: white; /* تأكد أن لون النص أبيض */
+  transition: all 0.5s ease; /* حركة ناعمة لكل الخصائص */
+}
+
+/* لو عندك Navigation Bar جوه الهيدر، ممكن تخليه يتوسط: */
+header nav {
+  display: flex;
+  justify-content: center; /* توسيط عناصر القائمة */
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: 700; /* خط أعرض للوجو */
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+header ul li {
+  margin-right: 20px;
+}
+
+header ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  font-weight: 600; /* خط أثقل للروابط */
+}
+
+header ul li a:hover {
+  color: var(--primary-color);
+}
+/* الهيدر لما نعمل سكرول */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+header.scrolled {
+  background: linear-gradient(270deg, #343a40, #212529, #0056b3);
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+  padding: 0.7rem 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+}
+/* عشان النص اللي جوه الهيدر (زي الروابط) يفضل أبيض */
+header nav a {
+  color: white !important;
+}
+/* --- 2. القسم التعريفي (Hero) --- */
+#hero {
+  padding-top: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+#hero .hero-text {
+  flex: 1;
+}
+
+#hero .hero-text h1 {
+  font-size: 42px;
+  line-height: 1.2;
+}
+
+#hero .hero-image {
+  flex: 1;
+  text-align: center;
+}
+
+#hero .hero-image img {
+  margin-top: 2%;
+  margin-left: -50%;
+  width: 210px;
+  height: 350px;
+  border-radius: 12px 30% 20% 12px; /* زوايا دائرية احترافية */
+  object-fit: cover;
+  /* border: 5px solid var(--primary-color); */
+  /* box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); ظل بلون أزرق خفيف */
+}
+
+strong.S1 {
+  font-size: 18px;
+  color: var(--primary-hover);
+  text-align: left;
+}
+strong.S2 {
+  font-size: 18px;
+  color: var(--primary-color);
+  text-align: right;
+}
+
+.cta-button-secondary {
+  width: 50%;
+  display: inline-block;
+  margin-left: 25%;
+  margin-right: 25%;
+  text-align: center;
+  background: var(--secondary-color);
+  color: #fff !important; /* لضمان لون الخط */
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: none;
+}
+/* زرار الدعوة لاتخاذ إجراء (CTA) */
+.cta-button {
+  display: inline-block;
+  background: var(--primary-color);
+  color: #fff !important; /* لضمان لون الخط */
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: none;
+}
+
+.cta-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* زرار ثانوي (للكود) */
+.cta-button.secondary {
+  background: var(--secondary-color);
+}
+.cta-button.secondary:hover {
+  background: var(--secondary-hover);
+}
+
+/* --- 4. قسم المهارات --- */
+.skills-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.skills-list li {
+  background: var(--light-color);
+  color: var(--dark-color);
+  padding: 10px 20px;
+  border-radius: 50px; /* شكل بيضاوي احترافي */
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.skills-list li:hover {
+  background: #ddd;
+  transform: translateY(-2px);
+}
+
+/* --- !!! الإضافة الجديدة: قسم معرض الأعمال --- */
+/* #portfolio {
+  background-color: var(--light-color); 
+} */
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* شبكة من عمودين */
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.portfolio-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* لإخفاء أي أجزاء تخرج عن الكارت */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.portfolio-card h3 {
+  padding: 15px 20px 5px 20px;
+}
+
+.portfolio-card p {
+  padding: 0 20px 15px 20px;
+  font-size: 15px;
+}
+
+.card-links {
+  padding: 0 20px 20px 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* --- 5. قسم التواصل (تعديل الأيقونات) --- */
+#contact {
+  text-align: center;
+}
+
+.contact-links a {
+  text-decoration: none;
+  color: var(--dark-color);
+  font-size: 40px; /* تكبير حجم الأيقونات */
+  margin: 0 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-links a:hover {
+  color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+/* --- 6. الفوتر --- */
+footer {
+  text-align: center;
+  padding: 30px 0;
+  background: var(--dark-color);
+  color: #fff;
+  margin-top: 0; /* إزالة الهامش لأن القسم الذي يسبقه ملون */
+  border-top: 1px solid #444;
+}
+
+/* ############################################### */
+/* ###       كود التجاوب للموبايل      ### */
+/* ############################################### */
+
+@media (max-width: 768px) {
+  #hero {
+    flex-direction: column; /* خلي الصورة فوق النص */
+  }
+  /* --- تعديل الهيدر للموبايل --- */
+  header nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  header ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  header ul li {
+    margin-right: 0;
+  }
+
+  /* --- تعديل القسم التعريفي للموبايل --- */
+  #hero {
+    padding-top: 220px;
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  #hero .hero-text h1 {
+    font-size: 32px;
+  }
+  #hero .hero-image img {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* --- تعديل معرض الأعمال للموبايل --- */
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* عمود واحد فقط في الموبايل */
+  }
+
+  /* --- تعديل المهارات للموبايل --- */
+  .skills-list {
+    justify-content: center;
+  }
+
+  /* --- تعديل قسم التواصل للموبايل --- */
+  .contact-links a {
+    font-size: 36px;
+    margin: 0 10px;
+  }
+}
+/* Back to Top Button */
+.back-to-top-btn {
+  display: none; /* مخفي في البداية */
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: var(
+    --primary-color,
+    #007bff
+  ); /* لون من الـ CSS Variables بتاعتك */
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.back-to-top-btn:hover {
+  background-color: var(--secondary-color, #0056b3); /* لون عند الـ hover */
+  opacity: 0.9;
+}
+
+/* Header scroll style */
+header.scrolled {
+  background-color: var(--secondary-color, #0056b3); /* لون أغمق عند السكرول */
+  padding: 0.7rem 0; /* تصغير الهيدر */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* زر القائمة (الهامبرجر) */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* القايمة الجانبية */
+.hidden-nav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0056b3, #212529);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: right 0.5s ease;
+  z-index: 1000;
+}
+
+.hidden-nav.active {
+  right: 0;
+}
+
+.hidden-nav li {
+  margin: 20px 0;
+}
+
+.hidden-nav a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* إظهار زر القائمة في الموبايل فقط */
+@media (max-width: 768px) {
+  #hero {
+    flex-direction: column; /* خلي الصورة فوق النص */
+  }
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+
+  header nav ul {
+    display: none; /* نخفي القايمة الأصلية */
+  }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لعبة صائد الخلد</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>صائد الخلد!</h1>
+      <div class="score-board">
+        <div class="score-item">
+          <p>النتيجة:</p>
+          <span id="score">0</span>
+        </div>
+        <div class="score-item">
+          <p>الوقت:</p>
+          <span id="time-left">30</span>
+        </div>
+      </div>
+
+      <button id="start-button">إبدأ اللعبة</button>
+
+      <div class="grid">
+        <div class="square" id="square-1"><div class="mole"></div></div>
+        <div class="square" id="square-2"><div class="mole"></div></div>
+        <div class="square" id="square-3"><div class="mole"></div></div>
+        <div class="square" id="square-4"><div class="mole"></div></div>
+        <div class="square" id="square-5"><div class="mole"></div></div>
+        <div class="square" id="square-6"><div class="mole"></div></div>
+        <div class="square" id="square-7"><div class="mole"></div></div>
+        <div class="square" id="square-8"><div class="mole"></div></div>
+        <div class="square" id="square-9"><div class="mole"></div></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

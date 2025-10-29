@@ -1,0 +1,323 @@
+/* --- إعدادات عامة وأساسيات --- */
+:root {
+  --primary-color: #d4af37; /* ذهبي لامع */
+  --secondary-color: #f0f0f0; /* أبيض ناصع للنصوص */
+  --accent-color: #a9a9a9; /* رمادي غامق كـ Accent */
+  --background-light: #1a1a1a; /* أسود خفيف كخلفية */
+  --background-dark: #000000; /* أسود داكن لخلفيات الأجزاء الرئيسية */
+  --text-color-light: #f0f0f0; /* أبيض للنصوص */
+  --text-color-dark: #333333; /* رمادي غامق جداً لو فيه حاجة محتاجة */
+  --button-hover-color: #c0c0c0; /* فضي فاتح للـ Hover */
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Cairo", sans-serif; /* استخدام خط Cairo */
+  line-height: 1.6;
+  color: var(--text-color-dark);
+  background-color: #fff;
+  direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
+  text-align: right; /* محاذاة النص لليمين */
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--background-dark);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color-dark);
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- الأزرار --- */
+.cta-button {
+  display: inline-block;
+  background: var(--text-color-dark);
+  color: #fff !important;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: none;
+  margin-top: 15px;
+}
+
+.cta-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* --- شريط التنقل (Navbar) --- */
+.navbar {
+  background: var(--text-color-dark);
+  color: #fff;
+  padding: 20px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.navbar nav ul {
+  display: flex;
+}
+
+.navbar nav ul li {
+  margin-right: 25px;
+}
+
+.navbar nav ul li a {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+  color: var(--accent-color);
+}
+
+/* --- قسم الـ Hero (القسم الرئيسي) --- */
+.hero {
+  background: linear-gradient(
+    to left,
+    var(--light-bg) 50%,
+    #fff 50%
+  ); /* خلفية مقسومة */
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0; /* padding علوي إضافي للهيدر */
+}
+
+.hero .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 52px;
+  line-height: 1.2;
+  color: var(--dark-bg);
+}
+
+.hero-text p {
+  font-size: 20px;
+  margin-top: 20px;
+  max-width: 500px;
+}
+
+.hero-image {
+  flex: 1;
+  text-align: left; /* محاذاة الصورة لليسار */
+}
+
+.hero-image img {
+  border-radius: 15px;
+  max-width: 100%;
+  height: auto;
+  display: block; /* لإزالة أي مساحة بيضاء أسفل الصورة */
+  transform: rotateY(180deg); /* لقلب الصورة لتناسب الاتجاه اليمين لليسار */
+}
+
+/* --- قسم المميزات (Features) --- */
+.features {
+  background-color: var(--dark-bg);
+  color: #fff;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.features h2 {
+  color: #fff;
+  margin-bottom: 40px;
+  font-size: 38px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.feature-item {
+  background: #343a40; /* لون خلفية غامق لكل ميزة */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+}
+
+.feature-item h3 {
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.feature-item p {
+  font-size: 16px;
+  color: #e9ecef; /* لون نص فاتح */
+}
+
+/* --- قسم الدعوة للعمل (CTA Section) --- */
+.cta-section {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  color: #fff;
+  font-size: 44px;
+}
+
+.cta-section p {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.cta-section .cta-button {
+  background: var(--accent-color); /* زر مميز بلون ذهبي */
+  color: var(--dark-bg) !important;
+  font-size: 20px;
+  padding: 15px 35px;
+}
+
+.cta-section .cta-button:hover {
+  background: #d4a700;
+  transform: translateY(-3px);
+}
+
+/* --- الفوتر --- */
+footer {
+  background: var(--background-dark);
+  color: #fff;
+  text-align: center;
+  padding: 30px 0;
+  font-size: 14px;
+}
+
+/* ############################################### */
+/* ###       كود التجاوب للموبايل      ### */
+/* ############################################### */
+
+@media (max-width: 768px) {
+  body {
+    text-align: center; /* توسيط النصوص في الموبايل */
+  }
+
+  .navbar .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar nav ul {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .navbar nav ul li {
+    margin-right: 0;
+  }
+
+  .hero .container {
+    flex-direction: column-reverse; /* الصورة فوق النص */
+    text-align: center;
+    gap: 30px;
+  }
+
+  .hero {
+    background: linear-gradient(
+      to bottom,
+      var(--light-bg) 50%,
+      #fff 50%
+    ); /* خلفية رأسية في الموبايل */
+    min-height: auto;
+    padding: 40px 0;
+  }
+
+  .hero-text h1 {
+    font-size: 40px; /* تصغير حجم العنوان */
+  }
+
+  .hero-text p {
+    font-size: 18px;
+  }
+
+  .hero-image img {
+    width: 80%; /* تصغير حجم الصورة */
+    margin: auto;
+  }
+
+  .features h2 {
+    font-size: 32px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr; /* عمود واحد للمميزات */
+  }
+
+  .cta-section h2 {
+    font-size: 36px;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 32px;
+  }
+  .hero-text p {
+    font-size: 16px;
+  }
+  .cta-section h2 {
+    font-size: 28px;
+  }
+}
